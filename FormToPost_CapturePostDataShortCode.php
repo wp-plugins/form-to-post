@@ -21,7 +21,7 @@ require_once('FormToPost_ShortCodeLoader.php');
     If not, see <http://www.gnu.org/licenses/>.
 */
 
-class FormToPost_CapturePostDataShortCode extends ShortCodeLoader {
+class FormToPost_CapturePostDataShortCode extends FormToPost_ShortCodeLoader {
 
     const FORM_TITLE_FIELD = 'form_title';
 
