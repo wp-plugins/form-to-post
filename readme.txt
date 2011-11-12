@@ -44,16 +44,16 @@ category names. It looks up the associated category numbers and sets "post_categ
 CF7 Form Definition Example:
 
 <pre><code>
-&lt;p&gt;Post Title&lt;br /&gt;
-    [text* post_title] &lt;/p&gt;
+Post Title [text* post_title] &lt;br/&gt;
 
-&lt;p&gt;Post Content (required)&lt;br /&gt;
-   [textarea* post_content] &lt;/p&gt;
+Post Content (required) &lt;br/&gt;
+   [textarea* post_content] &lt;br/&gt;
 
-&lt;p&gt;Categories (required)&lt;br /&gt;
-  [checkbox* post_category_name "Uncategorized" "Cat1" "Cat2" "Cat3"] &lt;/p&gt;
+Categories (required) &lt;br/&gt;
+  [checkbox* post_category_name "Uncategorized" "Cat1" "Cat2" "Cat3"] &lt;br/&gt;
 
-&lt;p&gt;[submit "Post"]&lt;/p&gt;
+[submit "Post"] &lt;br/&gt;
+
 </code></pre>
 
 <strong>Not using CF7 nor FSCF</strong>
@@ -107,5 +107,10 @@ of the same name as the wp_insert_post parameter. Examples are:
 
 == Changelog ==
 
+= 0.2 =
+
+Fixed issue related to date.
+
 = 0.1 =
+
 Initial Revision

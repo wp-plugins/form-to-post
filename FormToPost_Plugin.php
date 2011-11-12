@@ -141,7 +141,6 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
 
         $post = array(
             'post_status' => 'publish',
-            'post_date' => date('Y-m-d H:i:s'),
             'post_type' => 'post',
             'post_category' => array(0)
         );
@@ -172,6 +171,11 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
             'tags_input', // => [ '<tag>, <tag>, <...>' ] //For tags.
             'to_ping', // => [ ? ] //?
         );
+
+        if (!isset($post['post_date_gmt']) && !isset($post['post_date'])) {
+            $post['post_date_gmt'] = date('Y-m-d H:i:s');
+        }
+
 
         // Add in any additional fields
         foreach ($simpleFields as $field) {
