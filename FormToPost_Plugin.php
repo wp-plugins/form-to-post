@@ -201,7 +201,7 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
                 $categoryNames = $cf7->posted_data['post_category_name'];
             }
             else {
-                $categoryNames =  preg_split('/, /', stripslashes($cf7->posted_data['post_category_name']));;
+                $categoryNames =  preg_split('/, /', stripslashes($cf7->posted_data['post_category_name']));
             }
             $categoryIds = array();
             foreach ($categoryNames as $catName) {
@@ -211,12 +211,38 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
             $post['post_category'] = $categoryIds;
         }
 
-
+        // Alternative to using post_author=<user id>
+        if (isset($cf7->posted_data['post_author_name'])) {
+            $authorUser = get_userdatabylogin($cf7->posted_data['post_author_name']);
+            if ($authorUser && $authorUser->ID) {
+                $post['post_author'] = $authorUser->ID;
+            }
+        }
 
 
         // NOTE: 'tax_input' not supported
         // 'tax_input' // => [ array( 'taxonomy_name' => array( 'term', 'term2', 'term3' ) ) ] // support for custom taxonomies.
 
+
+        // Create the post
+        //error_log(print_r($post, true)); // debug
         $post_id = wp_insert_post($post);
+
+
+        // Allow setting the page template
+        if ($post_id && isset($cf7->posted_data['page_template'])) {
+            update_post_meta($post_id, '_wp_page_template', $cf7->posted_data['page_template']);
+        }
+
+        // Apply General Meta tags
+        foreach ($cf7->posted_data as $key => $val) {
+            if (strpos($key, 'meta_') === 0) {
+                $metaKey = substr($key, 5);
+                update_post_meta($post_id, $metaKey, $val);
+                //error_log("$metaKey => $val"); // debug
+            }
+        }
+
+
     }
 }
