@@ -18,9 +18,12 @@ Very limited.
 * Only accepts text, no images, videos, etc.
 * No error handling.
 
+Essentially you can thing of this as a form wrapper around the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post fuction</a>.
+The field name-value pairs of the form become inputs to a wp_insert_post call.
+
 <strong>How To</strong>
 
-1. Create a form using Contact Form 7 (CF7) or Fast Secure Contact Form (FSCF) plugins.
+1. Create a form using Contact Form 7 (CF7), Fast Secure Contact Form (FSCF), or create your own form HTML.
 1. Name your fields according to the parameters of the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post function</a>.
 
 Minimally, your form must have the following two fields. A post will not be created if one or both is missing.
@@ -28,18 +31,18 @@ Minimally, your form must have the following two fields. A post will not be crea
 * post_title
 * post_content
 
-<strong>How to handle categories</strong>
-You can create a multiple
+<strong>Special Fields</strong>
 
-If you want to make all the posts be of the same category, create a hidden field. Or you can create
-check boxes and allow multiple selection. In either case put in a field named:
+* post_category_name can be used to set the category of the post
 
-* post_category_name
 
-NOTE: if you are familiar with wp_insert_post, then you will know that there is a "post_category" parameter but no
-"post_category_name". The problem with "post_category" is it requires category ids (the numbers). But what you really
-want in a form are the category names. So this plug allows for "post_category_name" which can be one or more
-category names. It looks up the associated category numbers and sets "post_category" for wp_insert_post.
+As hidden field: If you want to make all the posts be of the same category, create a "post_category_name" hidden field
+whose value is the category name. If using CF7, it does not provide
+hidden fields. But you can add them by adding the plugin <a href="http://wordpress.org/extend/plugins/contact-form-7-modules/">Contact Form 7 Modules</a>.
+
+As checkboxes: to make the category choosable by the user via a checkbox,
+create a checkbox form field named "post_category_name" with each having a value that is a category name.
+(If writing your own HTML directly, use "post_category_name[]", see "Plain Form Example" below).
 
 CF7 Form Definition Example:
 
@@ -53,8 +56,20 @@ Categories (required) &lt;br/&gt;
   [checkbox* post_category_name "Uncategorized" "Cat1" "Cat2" "Cat3"] &lt;br/&gt;
 
 [submit "Post"] &lt;br/&gt;
-
 </code></pre>
+
+
+Aside: if you are familiar with wp_insert_post, then you will know that there is a "post_category" parameter but no
+"post_category_name". The problem with "post_category" is it requires category ids (the numbers). But what you really
+want in a form are the category names. So this plug allows for "post_category_name" which can be one or more
+category names. It looks up the associated category numbers and sets "post_category" for wp_insert_post.
+But you can use "post_category" instead if you like. But do not use both in the same form.
+
+* post_author_name
+
+Whereas post_author requires an user id number, you can alternatively use post_author_name takes the login name.
+(Same idea as post_category_name an an alternative to post_category).
+
 
 <strong>Not using CF7 nor FSCF</strong>
 You can define your own form naming fields as described above. But you need to do one extra step in this case.
@@ -83,7 +98,7 @@ NOTE: your form must have method="post" not "get".
 
 Remember: do NOT use [capture-form-to-post] if your form is a CF7 or FSCF form.
 
-Advanced:
+<strong>Advanced:</strong>
 
 There are many more parameters to wp_insert_post that can be set simply by putting a form fields in your form
 of the same name as the wp_insert_post parameter. Examples are:
@@ -93,8 +108,17 @@ of the same name as the wp_insert_post parameter. Examples are:
 * post_excerpt
 * post_date (format: <a href="http://php.net/manual/en/function.date.php">Y-m-d H:i:s</a>, e.g. "2012-01-01 15:30:00")
 * And many more, see <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post function</a>
+* page_template: set to the name of a page template file (e.g. "new_template.php").
 * NOTE: tax_input is NOT supported.
 * NOTE: If you would want to edit a form, you would need to get the post's ID and put it in a form 'ID' field.
+
+<strong>Setting Post Meta (Custom Fields):</strong>
+
+You can optionally set "post meta" (custom field) key-value pairs on your post. To do this, add fields to your form whose name start
+with "meta_". For example, if you want to set the post meta key "my_key" then create a form field named "meta_my_key".
+The "meta_" prefix is used to identify the field as a post meta field and the "meta_" gets stripped off. Then a call
+to <a href="http://codex.wordpress.org/Function_Reference/update_post_meta">update_post_meta</a>
+is made give that key and the field's value.
 
 == Installation ==
 
@@ -107,10 +131,13 @@ of the same name as the wp_insert_post parameter. Examples are:
 
 == Changelog ==
 
-= 0.2 =
+= 0.3 =
+* Added post_author_name
+* Added page_template
+* Added ability to set post meta tags
 
-Fixed issue related to date.
+= 0.2 =
+* Fixed issue related to date.
 
 = 0.1 =
-
-Initial Revision
+* Initial Revision
