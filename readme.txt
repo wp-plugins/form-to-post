@@ -3,8 +3,8 @@ Contributors: msimpson
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NEVDJ792HKGFN&lc=US&item_name=Wordpress%20Plugin&item_number=cf7%2dto%2ddb%2dextension&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags:
 Requires at least: 3.2.1
-Tested up to: 3.2.1
-Stable tag: 0.2
+Tested up to: 3.3.1
+Stable tag: 0.3
 
 Create a WP Post from a Form Submission.
 
