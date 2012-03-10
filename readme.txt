@@ -140,7 +140,7 @@ is made give that key and the field's value.
 
 == Changelog ==
 
-= 0.3 =
+= 0.4 =
 * Bug fixes
 * Added post_author_default
 
