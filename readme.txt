@@ -21,6 +21,8 @@ Very limited.
 Essentially you can thing of this as a form wrapper around the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post fuction</a>.
 The field name-value pairs of the form become inputs to a wp_insert_post call.
 
+WARNING: using this plugin provides spammers the opportunity to send you automated spam form submissions.
+
 <strong>How To</strong>
 
 1. Create a form using Contact Form 7 (CF7), Fast Secure Contact Form (FSCF), or create your own form HTML.
@@ -69,6 +71,13 @@ But you can use "post_category" instead if you like. But do not use both in the 
 
 Whereas post_author requires an user id number, you can alternatively use post_author_name takes the login name.
 (Same idea as post_category_name an an alternative to post_category).
+
+* post_author_default
+
+A weaker form of post_author_name, takes a login name. When not using post_author_name or post_author_default,
+then an author will only be set on the post if a person is logged in. In that case his login is used. If you use post_author_name
+then that ignores the user's login and sets the author to the post_author_name value. If you use post_author_default instead,
+then it will use the user's login id if he is logged in, but if he is not logged in it will set the author to the value of post_author_default.
 
 
 <strong>Not using CF7 nor FSCF</strong>
@@ -130,6 +139,10 @@ is made give that key and the field's value.
 
 
 == Changelog ==
+
+= 0.3 =
+* Bug fixes
+* Added post_author_default
 
 = 0.3 =
 * Added post_author_name

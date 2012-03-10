@@ -146,9 +146,13 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
         );
 
         global $user_ID;
-        if (isset($user_ID)) {
+        if (!isset($user_ID)) {
+            $user_ID = 0; // non logged in
+        }
+        if ($user_ID != 0) {
             $post['post_author'] = $user_ID;
         }
+
 
         // See http://codex.wordpress.org/Function_Reference/wp_insert_post
         $simpleFields = array(
@@ -212,9 +216,18 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
         }
 
         // Alternative to using post_author=<user id>
-        if (isset($cf7->posted_data['post_author_name'])) {
-            $authorUser = get_userdatabylogin($cf7->posted_data['post_author_name']);
-            if ($authorUser && $authorUser->ID) {
+        if (isset($cf7->posted_data['post_author_name']) && $cf7->posted_data['post_author_name']) {
+            $authorUser =  get_user_by('login', $cf7->posted_data['post_author_name']);
+            if ($authorUser && isset($authorUser->ID)) {
+                $post['post_author'] = $authorUser->ID;
+            }
+        }
+
+        // Allow for a default author to be set if not logged in or otherwise specified
+        if (!isset($post['post_author']) &&
+                isset($cf7->posted_data['post_author_default']) && $cf7->posted_data['post_author_default']) {
+            $authorUser = get_user_by('login', $cf7->posted_data['post_author_default']);
+            if ($authorUser && isset($authorUser->ID)) {
                 $post['post_author'] = $authorUser->ID;
             }
         }
