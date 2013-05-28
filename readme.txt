@@ -18,7 +18,7 @@ Very limited.
 * Only accepts text, no images, videos, etc.
 * No error handling.
 
-Essentially you can thing of this as a form wrapper around the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post fuction</a>.
+Essentially you can think of this as a form wrapper around the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post fuction</a>.
 The field name-value pairs of the form become inputs to a wp_insert_post call.
 
 WARNING: using this plugin provides spammers the opportunity to send you automated spam form submissions.
