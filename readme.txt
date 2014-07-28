@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NEVDJ
 Tags:
 Requires at least: 3.2.1
 Tested up to: 3.3.1
-Stable tag: 0.4
+Stable tag: 0.5
 
 Create a WP Post from a Form Submission.
 
