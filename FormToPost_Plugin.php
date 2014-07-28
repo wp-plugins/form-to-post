@@ -84,7 +84,7 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
         // Add options administration page
         // http://plugin.michael-simpson.com/?page_id=47
         //add_action('admin_menu', array(&$this, 'addSettingsSubMenuPage'));
-        add_action('wpcf7_before_send_mail', array(&$this, 'saveFormToPost'));
+        add_action('wpcf7_before_send_mail', array(&$this, 'saveCF7FormToPost'));
         add_action('fsctf_mail_sent', array(&$this, 'saveFormToPost'));
         add_action('cfdb_submit', array(&$this, 'saveFormToPost'));
 
@@ -119,6 +119,29 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
         // http://plugin.michael-simpson.com/?page_id=41
     }
 
+    /**
+     * Callback from Contact Form 7.
+     * @param $cf7 WPCF7_ContactForm
+     * @return bool
+     */
+    public function saveCF7FormToPost($cf7) {
+        if (!isset($cf7->posted_data) && class_exists('WPCF7_Submission')) {
+            // Contact Form 7 version 3.9 removed $cf7->posted_data and now
+            // we have to retrieve it from an API
+            $submission = WPCF7_Submission::get_instance();
+            if ($submission) {
+                $data = array();
+                $data['title'] = $cf7->title();
+                $data['posted_data'] = $submission->get_posted_data();
+                $data['uploaded_files'] = $submission->uploaded_files();
+                $this->saveFormToPost((object) $data);
+            }
+        } else {
+            $this->saveFormToPost($cf7);
+        }
+        return true;
+    }
+
 
     /**
      * Callback from Contact Form 7. CF7 passes an object with the posted data which is inserted into the database
@@ -126,7 +149,7 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
      * Also callback from Fast Secure Contact Form
      * @param $cf7 WPCF7_ContactForm|object the former when coming from CF7, the latter $fsctf_posted_data object variable
      * if coming from FSCF
-     * @return void
+     * @return bool
      */
     public function saveFormToPost($cf7) {
 
@@ -135,7 +158,7 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
             !isset($cf7->posted_data['post_content'])
         ) {
             // not a form submission intended to be made into a post
-            return;
+            return true;
         }
 
 
@@ -256,6 +279,6 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
             }
         }
 
-
+        return true;
     }
 }

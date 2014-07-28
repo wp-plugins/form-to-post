@@ -140,6 +140,9 @@ is made give that key and the field's value.
 
 == Changelog ==
 
+= 0.5 =
+* Updated to work with changes in Contact Form 7 version 3.9
+
 = 0.4 =
 * Bug fixes
 * Added post_author_default
