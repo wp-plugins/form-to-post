@@ -1,7 +1,7 @@
 <?php
 
 /*
-    "Form to Post" Copyright (C) 2011 Michael Simpson  (email : michael.d.simpson@gmail.com)
+    "Form to Post" Copyright (C) 2014 Michael Simpson  (email : michael.d.simpson@gmail.com)
 
     This file is part of WordPress Plugin "Form to Post".
 
@@ -243,6 +243,15 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
             $authorUser =  get_user_by('login', $cf7->posted_data['post_author_name']);
             if ($authorUser && isset($authorUser->ID)) {
                 $post['post_author'] = $authorUser->ID;
+            }
+        }
+
+        // If user is logged in, pick up his login id as the author
+        if (!isset($post['post_author'])) {
+            $current_user = wp_get_current_user();
+            if ($current_user->ID) {
+                // logged in
+                $post['post_author'] = $current_user->ID;
             }
         }
 

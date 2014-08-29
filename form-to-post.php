@@ -2,15 +2,15 @@
 /*
    Plugin Name: Form to Post
    Plugin URI: http://wordpress.org/extend/plugins/form-to-post/
-   Version: 0.5
-   Author: msimpson
+   Version: 0.6
+   Author: Michael Simpson
    Description: Create a WP Post from a Form Submission
    Text Domain: form-to-post
    License: GPL3
   */
 
 /*
-    "WordPress Plugin Template" Copyright (C) 2011 Michael Simpson  (email : michael.d.simpson@gmail.com)
+    "WordPress Plugin Template" Copyright (C) 2014 Michael Simpson  (email : michael.d.simpson@gmail.com)
 
     This following part of this file is part of WordPress Plugin Template for WordPress.
 
