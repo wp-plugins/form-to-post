@@ -18,7 +18,7 @@ Very limited.
 * Only accepts text, no images, videos, etc.
 * No error handling.
 
-Essentially you can think of this as a form wrapper around the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post fuction</a>.
+Essentially you can think of this as a form wrapper around the <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post function</a>.
 The field name-value pairs of the form become inputs to a wp_insert_post call.
 
 WARNING: using this plugin provides spammers the opportunity to send you automated spam form submissions.
@@ -129,6 +129,33 @@ The "meta_" prefix is used to identify the field as a post meta field and the "m
 to <a href="http://codex.wordpress.org/Function_Reference/update_post_meta">update_post_meta</a>
 is made give that key and the field's value.
 
+<strong>Setting Values on the Server Side Using a Filter:</strong>
+
+Example Situation 1: you want to set the post_status set to 'pending' so that you can review posts before they are published.
+However, you don't want to put that as a field in your form because you are concerned about a hacker changing its value 'published'.
+You want to control that on the server side, not in the form in the user's browser.
+
+Example Situation 2: you want to apply some logic about whether a post is automatically published (perhaps based on the user's login).
+
+To address these situations, Form To Post provides a WordPress filter where you can add PHP code.
+
+* The filter name is <code>form_to_post_before_create_post</code>
+* A filter function takes 1 array parameter, which will be the $post array passed to the
+<a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post function</a>
+
+Example Situation 1 Solution:
+In your theme or using Add Actions and Filters plugin, add a filter function and register it to the
+<code>form_to_post_before_create_post</code> hook.
+
+<code>
+function form_to_post_set_values($post) {
+    $post['post_status'] = 'pending';
+    return $post;
+}
+
+add_filter('form_to_post_before_create_post', 'form_to_post_set_values');
+</code>
+
 == Installation ==
 
 
@@ -139,6 +166,9 @@ is made give that key and the field's value.
 
 
 == Changelog ==
+
+= 0.7 =
+* Added a filter 'form_to_post_before_create_post' to post-process form submission values prior to creating the post.
 
 = 0.6 =
 * If user is logged when submitting a form then it automatically makes him the post author

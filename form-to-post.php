@@ -2,7 +2,7 @@
 /*
    Plugin Name: Form to Post
    Plugin URI: http://wordpress.org/extend/plugins/form-to-post/
-   Version: 0.6
+   Version: 0.7
    Author: Michael Simpson
    Description: Create a WP Post from a Form Submission
    Text Domain: form-to-post

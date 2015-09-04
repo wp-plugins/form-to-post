@@ -269,6 +269,8 @@ class FormToPost_Plugin extends FormToPost_LifeCycle {
         // 'tax_input' // => [ array( 'taxonomy_name' => array( 'term', 'term2', 'term3' ) ) ] // support for custom taxonomies.
 
 
+        $post = apply_filters('form_to_post_before_create_post', $post);
+
         // Create the post
         //error_log(print_r($post, true)); // debug
         $post_id = wp_insert_post($post);
