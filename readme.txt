@@ -145,7 +145,7 @@ To address these situations, Form To Post provides a WordPress filter where you 
 
 Example Situation 1 Solution:
 In your theme or using Add Actions and Filters plugin, add a filter function and register it to the
-<code>form_to_post_before_create_post</code> hook.
+form_to_post_before_create_post hook.
 
 <code>
 function form_to_post_set_values($post) {
