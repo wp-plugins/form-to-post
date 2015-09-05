@@ -144,7 +144,9 @@ To address these situations, Form To Post provides a WordPress filter where you 
 <a href="http://codex.wordpress.org/Function_Reference/wp_insert_post">wp_insert_post function</a>
 
 Example Situation 1 Solution:
-In your theme or using Add Actions and Filters plugin, add a filter function and register it to the
+In your theme or using
+<a href="https://wordpress.org/plugins/add-actions-and-filters/">Add Actions and Filters</a>
+plugin, add a filter function and register it to the
 form_to_post_before_create_post hook.
 
 <code>
